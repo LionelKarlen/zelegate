@@ -6,7 +6,7 @@
 in
   pkgs.stdenv.mkDerivation rec {
     pname = "zelegate";
-    version = "0.1.0";
+    version = "0.1.1";
 
     src = ./.;
 
