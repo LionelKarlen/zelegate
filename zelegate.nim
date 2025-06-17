@@ -3,6 +3,7 @@ import os
 import strutils
 import strformat
 import parseopt
+import json
 
 type SessionKind = enum Attach, Create
 
@@ -43,20 +44,25 @@ proc pick_session(paths: seq[string]): (string, SessionKind)=
         abort_if_empty(directory)
 
         # get last folder name and replace spaces with underscore
-        let name = directory
         selection=directory.rsplit("/",maxsplit=1)[0]
 
     return (selection, kind)
 
-var ops = initOptParser()
+var ops = initOptParser(shortNoVal = {'v'}, longNoVal = @["version"])
+const version = parseJson(staticRead("zelegate.json"))["version"].getStr()
 var paths: seq[string] = @[]
 while true:
     ops.next()
     case ops.kind:
     of cmdEnd: break
+    of cmdShortOption, cmdLongOption:
+        case ops.key:
+        of "v","version":
+            echo version
+            quit()
+        else:continue
     of cmdArgument:
         paths.add(ops.key)
-    else:continue
 
 if paths.len == 0:
     echo "no paths specified."

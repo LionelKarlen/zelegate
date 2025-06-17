@@ -3,10 +3,12 @@
     fzf
     fd
   ];
+  meta = builtins.fromJSON (builtins.readFile (./. + "/zelegate.json"));
+  version = meta.version;
 in
   pkgs.stdenv.mkDerivation rec {
     pname = "zelegate";
-    version = "0.2.1";
+    inherit version;
 
     src = ./.;
 
