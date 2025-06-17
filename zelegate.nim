@@ -64,6 +64,11 @@ while true:
     of cmdArgument:
         paths.add(ops.key)
 
+let have_deps = execCmdEx("command -v fzf fd")[1]==0;
+if not have_deps:
+    echo "cannot find fzf or fd."
+    quit()
+
 if paths.len == 0:
     echo "no paths specified."
     quit()
