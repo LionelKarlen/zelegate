@@ -6,16 +6,17 @@
   meta = builtins.fromJSON (builtins.readFile (./. + "/zelegate.json"));
   version = meta.version;
 in
-  pkgs.stdenv.mkDerivation rec {
+  pkgs.stdenv.mkDerivation {
     pname = "zelegate";
     inherit version;
 
     src = ./.;
 
-    nativeBuildInputs = with pkgs; [
-      nim
-      makeWrapper
-    ];
+    buildInputs = with pkgs;
+      [
+        nim
+      ]
+      ++ external_binaries;
 
     buildPhase = ''
       export XDG_CACHE_HOME=$(mktemp -d)
@@ -27,7 +28,5 @@ in
       mkdir -p $out/bin
       install -Dm755 zelegate $out/bin
       install -Dm755 zelewidget $out/bin
-
-      wrapProgram $out/bin/zelegate --prefix PATH : "${pkgs.lib.makeBinPath external_binaries}"
     '';
   }
