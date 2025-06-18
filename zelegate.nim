@@ -18,7 +18,11 @@ proc pick_session(paths: seq[string]): (string, SessionKind)=
     let path_string = paths.join(" ")
 
     # pick from active sessions
-    let picked_session = execCmdEx(fmt"zellij ls -n -s | fzf --print-query -1 {FZF_UI}")[0]
+    var sessions = execCmdEx("zellij ls -n -s")[0]
+    if sessions == "No active zellij sessions found.\n":
+        sessions=""
+
+    let picked_session = execCmdEx(fmt"""printf "{sessions}create new" | fzf --print-query {FZF_UI}""")[0]
     abort_if_empty(picked_session)
 
     let lines = picked_session.splitLines()
@@ -27,7 +31,7 @@ proc pick_session(paths: seq[string]): (string, SessionKind)=
     var kind = SessionKind.Attach
 
     # specify that we want to create a new session
-    if query == "new" or query == "n":
+    if query == "new" or query == "n" or selection == "/create new":
         kind = SessionKind.Create
         # query directories
         let (tmp_directories, directories_code) = execCmdEx(fmt"fd -td -c never --min-depth 1 --max-depth 1 --base-directory $HOME . {path_string}")
@@ -40,7 +44,7 @@ proc pick_session(paths: seq[string]): (string, SessionKind)=
         # trim ending newline
         let directories = tmp_directories.rsplit("\n", maxsplit=1)[0]
 
-        let directory = execCmdEx(fmt"echo '{directories}' | fzf {FZF_UI}")[0]
+        let directory = execCmdEx(fmt"""printf "{directories}" | fzf {FZF_UI}""")[0]
         abort_if_empty(directory)
 
         # get last folder name and replace spaces with underscore
@@ -75,6 +79,7 @@ if paths.len == 0:
 
 let (session_path, session_kind) = pick_session(paths)
 let session_name = session_path.rsplit("/", maxsplit=1)[1].replace(" ","_")
+abort_if_empty(session_name)
 
 let is_zellij = getEnv("ZELLIJ")
 var cmd = ""
