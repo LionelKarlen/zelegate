@@ -35,8 +35,11 @@ The system must:
 - List all currently open sessions (#1)
 - Attach to a session, or switch to a session (#2)
 - Read and parse the configuration file (#3)
+- Define custom sessions (#7)
 - List all custom sessions (#4)
 - Command-agnostic backend for folder sessions (#5)
+- List folders (#6)
+- Create new sessions (#8)
 
 
 # Non-functional Requirements
