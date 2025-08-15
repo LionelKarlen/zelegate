@@ -1,4 +1,3 @@
-use core::str;
 use std::process::{Command, ExitStatus};
 
 #[derive(Debug)]

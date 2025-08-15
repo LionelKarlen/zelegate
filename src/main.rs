@@ -1,6 +1,7 @@
-use crate::list::show_list;
+use crate::{into::into, list::show_list};
 use clap::{Parser, Subcommand};
 
+mod into;
 mod list;
 
 #[derive(Parser)]
@@ -13,6 +14,7 @@ struct Arguments {
 #[derive(Subcommand)]
 enum Commands {
     List,
+    Into { destination: String },
 }
 
 fn main() {
@@ -21,6 +23,9 @@ fn main() {
     match &arguments.command {
         Some(Commands::List) => {
             show_list();
+        }
+        Some(Commands::Into { destination }) => {
+            into(destination);
         }
         None => {}
     }
