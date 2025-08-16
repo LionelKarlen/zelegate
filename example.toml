@@ -1,2 +1,10 @@
 [general]
 default_layout="not_default"
+
+[[session]]
+name="test_session"
+
+[[session]]
+name="nixfiles"
+path="~/.nixfiles"
+layout="nixfiles"

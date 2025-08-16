@@ -15,9 +15,6 @@ An example configuration:
 [general]
 folder_backend = "zoxide query -l"
 
-[visual]
-icon = ""
-
 [[session]]
 name = "nix"
 path = "~/.nixfiles"

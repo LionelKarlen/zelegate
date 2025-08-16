@@ -5,12 +5,14 @@ use std::{fs::read_to_string, io::ErrorKind, path::PathBuf};
 #[serde(default)]
 pub struct ZelegateConfig {
     pub general: GeneralConfig,
+    pub session: Vec<CustomSession>,
 }
 
 impl Default for ZelegateConfig {
     fn default() -> Self {
         Self {
             general: GeneralConfig::default(),
+            session: Vec::new(),
         }
     }
 }
@@ -34,6 +36,23 @@ impl Default for GeneralConfig {
     }
 }
 
+#[derive(Deserialize, Debug)]
+#[serde(default)]
+pub struct CustomSession {
+    pub name: String,
+    pub path: PathBuf,
+    pub layout: String,
+}
+
+impl Default for CustomSession {
+    fn default() -> Self {
+        Self {
+            name: Default::default(),
+            path: "$HOME".into(),
+            layout: "default".to_string(),
+        }
+    }
+}
 impl ZelegateConfig {
     fn from_str(s: &str) -> Self {
         // TODO: [ERROR] Handle error properly
