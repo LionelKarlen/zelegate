@@ -17,9 +17,10 @@ The core features the software supports are:
 
 This requires a configuration file, the syntax of which is defined in [config.md](config.md). This necessitates additional considerations:
 - how is the configuration file accessed?
-    > The default location is ~/.config/zelegate.toml. The path can also be given by the `--config` flag.
+    > The default location is ~/.config/zelegate/zelegate.toml. The path can also be given by the `--config` flag.
 - how does the program function when it isn't found?
     > It simply skips the custom sessions, and folders, and only lists current sessions
+    > It runs the default configuration
 
 # User Requirements
 <!-- How do our users expect to interact with the software? What do they know, what do they *need* to know? This would be a good place to think about user stories (user a wants to do xzy; they go to abc and do uvw;), and the general hierarchy of the software, any public interface (api, ui). -->

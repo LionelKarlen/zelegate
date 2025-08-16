@@ -20,10 +20,10 @@ impl Session {
             _ => SessionKind::Unknown,
         };
 
-        return Session {
+        Session {
             name: name.to_string(),
             kind: kind,
-        };
+        }
     }
 }
 
@@ -39,7 +39,7 @@ pub fn show_list() {
 
 fn list_sessions() {
     let value = Command::new("zellij").arg("ls").arg("-n").output();
-    // FIXME: handle error properly
+    // TODO: [ERROR] handle error properly
     let value = value.expect("failed to run zellij command");
     if ExitStatus::success(&value.status) {
         let sessions = str::from_utf8(&value.stdout).unwrap();
@@ -48,7 +48,7 @@ fn list_sessions() {
             .iter()
             .for_each(|u| println!("{} ({:?})", u.name, u.kind));
     } else {
-        // FIXME: handle error properly
+        // TODO: [ERROR] handle error properly
         panic!("Zellij list command failed.");
     }
 }

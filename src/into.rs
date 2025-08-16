@@ -1,6 +1,8 @@
 use std::{env, process::Command};
 
-pub fn into(destination: &str) {
+use crate::config::ZelegateConfig;
+
+pub fn into(destination: &str, _config: &ZelegateConfig) {
     println!("welcome to destination: {}", destination);
 
     // Check if we are in a zellij session
@@ -29,8 +31,6 @@ pub fn into(destination: &str) {
             child = command.arg("attach").arg(destination);
         }
     }
-
-    println!("starting command");
 
     // Use status here, because it just lets the command run
     let _ = child.status().expect("Failed to start command");
