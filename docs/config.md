@@ -5,6 +5,8 @@ The default configuration (no file given) is:
 prefer_custom = true
 # Should creating a new session be prioritised over resurrecting a session, if they have the same name/are the same session
 prefer_create = true
+# How should a custom session be listed, if it is already running. One of "both" (show both), "custom" (show only the custom session), or "alive" (show only the running session);
+alive_custom_behaviour = "alive"
 # The source of the folder list. You might want to use something like `zoxide query -l`, or `find .... TODO: fill out`
 folder_backend=""
 ```

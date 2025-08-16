@@ -43,7 +43,6 @@ pub struct CustomSession {
     pub path: PathBuf,
     pub layout: String,
 }
-
 impl Default for CustomSession {
     fn default() -> Self {
         Self {

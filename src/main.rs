@@ -44,7 +44,7 @@ fn main() {
 
     match &arguments.command {
         Commands::List => {
-            show_list();
+            show_list(&config);
         }
         Commands::Into { destination } => {
             into(destination, &config);
