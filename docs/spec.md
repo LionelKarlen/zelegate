@@ -41,6 +41,7 @@ The system must:
 - Command-agnostic backend for folder sessions (#5)
 - List folders (#6)
 - Create new sessions (#8)
+- Custom session with layouts (#9)
 
 
 # Non-functional Requirements

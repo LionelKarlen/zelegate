@@ -1,5 +1,6 @@
 [general]
 default_layout="not_default"
+folder_backend="zoxide query -l"
 
 [[session]]
 name="test_session"

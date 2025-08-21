@@ -14,9 +14,12 @@ pub fn into(destination: &str, _config: &ZelegateConfig) {
     let mut command = Command::new("zellij");
     let child: &mut Command;
 
+    let (session_name, session_kind) = destination
+        .split_once(" ")
+        .expect("failed to parse into argument. did you use a zelegate list call?");
+
     match is_zellij {
         true => {
-            println!("in zellij session");
             // zellij pipe --plugin zellij-switch -- "--session {session_name} --cwd $HOME/{session_path}"
             child = command
                 .arg("pipe")
@@ -26,9 +29,8 @@ pub fn into(destination: &str, _config: &ZelegateConfig) {
                 .arg(format!("--session {destination}"));
         }
         false => {
-            println!("not in zellij session");
             // zellij attach -c {session_name}
-            child = command.arg("attach").arg(destination);
+            child = command.arg("attach").arg("-c").arg(destination);
         }
     }
 

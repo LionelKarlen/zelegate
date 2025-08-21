@@ -8,6 +8,7 @@ enum SessionKind {
     Alive,
     Exited,
     Custom,
+    Folder,
     Unknown,
 }
 
@@ -35,6 +36,13 @@ impl Session {
             kind: SessionKind::Custom,
         }
     }
+
+    fn from_folder(path_string: &str) -> Self {
+        Self {
+            name: path_string.to_string(),
+            kind: SessionKind::Folder,
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -46,12 +54,17 @@ struct Session {
 pub fn show_list(config: &ZelegateConfig) {
     let sessions = list_sessions();
     let custom_sessions = list_custom_sessions(&config.session);
+    let folder_sessions = list_folders(&config);
 
     sessions
         .iter()
         .for_each(|u| println!("{} ({:?})", u.name, u.kind));
 
     custom_sessions
+        .iter()
+        .for_each(|u| println!("{} ({:?})", u.name, u.kind));
+
+    folder_sessions
         .iter()
         .for_each(|u| println!("{} ({:?})", u.name, u.kind));
 }
@@ -61,6 +74,25 @@ fn list_custom_sessions(sessions: &Vec<CustomSession>) -> Vec<Session> {
         .iter()
         .filter_map(|u| Some(Session::from_custom(u)))
         .collect()
+}
+
+fn list_folders(config: &ZelegateConfig) -> Vec<Session> {
+    if config.general.folder_backend.len() > 0 {
+        let args = config.general.folder_backend.clone();
+        // TODO: [ERROR] handle error properly
+        let (cmd, args) = args.split_once(' ').unwrap();
+        let output = Command::new(cmd).args(args.split_whitespace()).output();
+        // TODO: [ERROR] handle error properly
+        let output = output.expect("failed to run command");
+
+        if ExitStatus::success(&output.status) {
+            let s = str::from_utf8(&output.stdout).unwrap();
+            let sessions: Vec<Session> = s.lines().map(|u| Session::from_folder(u)).collect();
+            return sessions;
+        }
+        panic!("failed to run folder comand");
+    }
+    return vec![];
 }
 
 fn list_sessions() -> Vec<Session> {

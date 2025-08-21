@@ -23,7 +23,7 @@ pub struct GeneralConfig {
     pub prefer_custom: bool,
     pub prefer_create: bool,
     pub default_layout: String,
-    // folder_backend: Option<String>,
+    pub folder_backend: String,
 }
 
 impl Default for GeneralConfig {
@@ -32,6 +32,7 @@ impl Default for GeneralConfig {
             prefer_custom: true,
             prefer_create: true,
             default_layout: "default".to_string(),
+            folder_backend: "".to_string(),
         }
     }
 }
