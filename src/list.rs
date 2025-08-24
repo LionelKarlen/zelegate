@@ -3,13 +3,26 @@ use std::process::{Command, ExitStatus};
 use crate::config::{CustomSession, ZelegateConfig};
 
 #[derive(Debug)]
-enum SessionKind {
+pub enum SessionKind {
     Current,
     Alive,
     Exited,
     Custom,
     Folder,
     Unknown,
+}
+
+impl SessionKind {
+    pub fn from_string(s: &str) -> Self {
+        match s {
+            "(Alive)" => SessionKind::Alive,
+            "(Current)" => SessionKind::Current,
+            "(Custom)" => SessionKind::Custom,
+            "(Exited)" => SessionKind::Exited,
+            "(Folder)" => SessionKind::Folder,
+            _ => SessionKind::Unknown,
+        }
+    }
 }
 
 impl Session {

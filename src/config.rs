@@ -20,18 +20,16 @@ impl Default for ZelegateConfig {
 #[derive(Deserialize, Debug)]
 #[serde(default)]
 pub struct GeneralConfig {
-    pub prefer_custom: bool,
-    pub prefer_create: bool,
-    pub default_layout: String,
+    pub clean_exited: bool,
+    pub default_path: String,
     pub folder_backend: String,
 }
 
 impl Default for GeneralConfig {
     fn default() -> Self {
         Self {
-            prefer_custom: true,
-            prefer_create: true,
-            default_layout: "default".to_string(),
+            clean_exited: false,
+            default_path: "".to_string(),
             folder_backend: "".to_string(),
         }
     }
@@ -41,15 +39,13 @@ impl Default for GeneralConfig {
 #[serde(default)]
 pub struct CustomSession {
     pub name: String,
-    pub path: PathBuf,
-    pub layout: String,
+    pub path: String,
 }
 impl Default for CustomSession {
     fn default() -> Self {
         Self {
             name: Default::default(),
             path: "$HOME".into(),
-            layout: "default".to_string(),
         }
     }
 }

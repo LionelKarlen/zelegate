@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{path::PathBuf, process::Command};
 
 use crate::{
     config::{ZelegateConfig, read_config},
@@ -41,6 +41,10 @@ fn main() {
         }
     };
     let config: ZelegateConfig = read_config(config_path);
+
+    if config.general.clean_exited {
+        let _ = Command::new("zellij").arg("da").arg("-y").status();
+    }
 
     match &arguments.command {
         Commands::List => {
