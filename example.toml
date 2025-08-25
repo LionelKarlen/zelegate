@@ -1,0 +1,11 @@
+[general]
+clean_exited=true
+folder_backend="zoxide query -l"
+
+[[session]]
+name="test_session"
+path="/home/lionel/dev/"
+
+[[session]]
+name="nixfiles"
+path="/home/lionel/.nixfiles/"
